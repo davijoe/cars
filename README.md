@@ -21,4 +21,4 @@ How to write simple "integration" tests, using H2 as a mock-database instead of 
    How you did that in your code\
    \
 How to add (dev) connection details for you local MySQL database\
-   How you did that\
+   How you did that
