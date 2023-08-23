@@ -19,6 +19,6 @@ How to use and define repositories and relevant query methods using Spring Data 
    \
 How to write simple "integration" tests, using H2 as a mock-database instead of MySQL\
    How you did that in your code\
-   
+   \
 How to add (dev) connection details for you local MySQL database\
    How you did that\
