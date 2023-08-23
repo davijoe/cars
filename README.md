@@ -1,5 +1,5 @@
 # Cars 'R' Us
-The idea with, and reasons for why to use, a ORM-mapper
+The idea with, and reasons for why to use, a ORM-mapper <br>
    Your short summary here
 The meaning of the terms JPA, Hibernate and Spring Data JPA and how they are connected
    Your short summary here
