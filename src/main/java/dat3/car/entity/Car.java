@@ -29,5 +29,4 @@ public class Car {
         this.model = model;
         this.pricePrDay = pricePrDay;
     }
-
 }
