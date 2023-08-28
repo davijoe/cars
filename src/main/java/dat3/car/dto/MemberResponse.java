@@ -28,8 +28,8 @@ public class MemberResponse {
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     LocalDateTime edited;
-    int ranking;
-    boolean approved;
+    Integer ranking;
+    Boolean approved;
 
     //Convert Member Entity to Member DTO
     public MemberResponse(Member m, boolean includeAll) {
