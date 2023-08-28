@@ -1,9 +1,12 @@
 package dat3.car.service;
 
+import dat3.car.dto.MemberRequest;
 import dat3.car.dto.MemberResponse;
 import dat3.car.entity.Member;
 import dat3.car.repository.MemberRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,4 +30,15 @@ public class MemberService {
         }
         return response;
     }
+
+    public MemberResponse addMember(MemberRequest body){
+        if(memberRepository.existsById(body.getUsername())){
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST,"This user already exists");
+        }
+
+        Member newMember = MemberRequest.getMemberEntity(body);
+        newMember = memberRepository.save(newMember);
+        return new MemberResponse(newMember, true);
+    }
+
 }

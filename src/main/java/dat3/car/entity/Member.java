@@ -14,12 +14,12 @@ public class Member extends AdminDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    int id;
 
-    @Column(nullable = false, length = 45)
+    @Column(nullable = false, length = 45, unique = true)
     String username;
 
-    @Column(nullable = false, length = 45)
+    @Column(nullable = false, length = 45, unique = true)
     String email;
 
     @Column(nullable = false, length = 45)
@@ -56,5 +56,9 @@ public class Member extends AdminDetails {
         this.zip = zip;
         this.approved = approved;
         this.ranking = ranking;
+    }
+
+    public Member(String username, String password, String email, String firstName, String lastName, String street, String city, String zip) {
+        super();
     }
 }

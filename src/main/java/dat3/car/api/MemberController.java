@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/members")
-class MemberController {
+public class MemberController {
 
     MemberService memberService;
 
@@ -28,10 +28,10 @@ class MemberController {
     @GetMapping(path = "/{username}")
     MemberResponse getMemberById(@PathVariable String username) throws Exception {return null;}
 
-    //Security --> ??????
+    //Security --> Anonymous
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     MemberResponse addMember(@RequestBody MemberRequest body){
-        return null;
+        return memberService.addMember(body);
     }
 
     //Security ???
