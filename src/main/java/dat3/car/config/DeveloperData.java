@@ -1,7 +1,9 @@
 package dat3.car.config;
 
 import dat3.car.entity.Car;
+import dat3.car.entity.Member;
 import dat3.car.repository.CarRepository;
+import dat3.car.repository.MemberRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
@@ -15,9 +17,14 @@ public class DeveloperData implements ApplicationRunner {
 
     final CarRepository carRepository;
 
-    public DeveloperData(CarRepository carRepository) {
+    final MemberRepository memberRepository;
+
+    public DeveloperData(CarRepository carRepository, MemberRepository memberRepository) {
         this.carRepository = carRepository;
+        this.memberRepository = memberRepository;
     }
+
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -131,5 +138,12 @@ public class DeveloperData implements ApplicationRunner {
         carRepository.saveAll(cars);
 
         System.out.println("Successfully saved all cars");
+
+        List<Member> members = new ArrayList<>();
+        members.add(new Member("user1", "example1@example.com", "letmein", "Anders", "Andersen","Eksempelvænget 1", "Eksempelby","1234",false,0));
+
+        memberRepository.saveAll(members);
+
+        System.out.println("Successfully saved all members");
     }
 }

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Member {
+public class Member extends AdminDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +38,14 @@ public class Member {
     String city;
 
     @Column(length = 10)
-    int zip;
+    String zip;
 
-    public Member(String username, String email, String password, String firstName, String lastName, String street, String city, int zip){
+    @Column(nullable = false)
+    boolean approved;
+
+    int ranking;
+
+    public Member(String username, String email, String password, String firstName, String lastName, String street, String city, String zip, boolean approved, int ranking){
         this.username = username;
         this.email = email;
         this.password = password;
@@ -49,5 +54,7 @@ public class Member {
         this.street = street;
         this.city = city;
         this.zip = zip;
+        this.approved = approved;
+        this.ranking = ranking;
     }
 }
