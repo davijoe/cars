@@ -26,7 +26,9 @@ public class MemberController {
 
     //Security ???
     @GetMapping(path = "/{username}")
-    MemberResponse getMemberById(@PathVariable String username) throws Exception {return null;}
+    MemberResponse getMemberById(@PathVariable String username) throws Exception {return null;
+        memberService.findById(username);
+    }
 
     //Security --> Anonymous
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,7 +39,7 @@ public class MemberController {
     //Security ???
     @PutMapping("/{username}")
     ResponseEntity<Boolean> editMember(@RequestBody MemberRequest body, @PathVariable String username){
-        return null;
+        return memberService.editMember(body,username);
     }
 
     //Security ????

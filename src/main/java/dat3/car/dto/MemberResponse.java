@@ -22,7 +22,7 @@ public class MemberResponse {
     String lastName;
     String street;
     String city;
-    String zip;
+    int zip;
     //@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     LocalDateTime created;
 

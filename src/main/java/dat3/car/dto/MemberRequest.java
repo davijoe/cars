@@ -17,7 +17,7 @@ public class MemberRequest {
     String lastName;
     String street;
     String city;
-    String zip;
+    int zip;
 
     public static Member getMemberEntity(MemberRequest m){
         return new Member(m.username,m.getPassword(),m.getEmail(), m.firstName, m.lastName,m.getStreet(), m.getCity(), m.getZip());

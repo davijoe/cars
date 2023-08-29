@@ -14,7 +14,7 @@ public class Member extends AdminDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @Column(nullable = false, length = 45, unique = true)
     String username;
@@ -38,14 +38,14 @@ public class Member extends AdminDetails {
     String city;
 
     @Column(length = 10)
-    String zip;
+    int zip;
 
     @Column(nullable = false)
     boolean approved;
 
     int ranking;
 
-    public Member(String username, String email, String password, String firstName, String lastName, String street, String city, String zip, boolean approved, int ranking){
+    public Member(String username, String email, String password, String firstName, String lastName, String street, String city, int zip, boolean approved, int ranking){
         this.username = username;
         this.email = email;
         this.password = password;
@@ -58,7 +58,7 @@ public class Member extends AdminDetails {
         this.ranking = ranking;
     }
 
-    public Member(String username, String password, String email, String firstName, String lastName, String street, String city, String zip) {
+    public Member(String username, String password, String email, String firstName, String lastName, String street, String city, int zip) {
         super();
     }
 }
