@@ -49,6 +49,8 @@ public class MemberController {
 
     // Security ---> ADMIN
     @DeleteMapping("/{username}")
-    void deleteMemberByUsername(@PathVariable String username) {}
+    void deleteMemberByUsername(@PathVariable String username) {
+        memberService.deleteMemberByUsername(username);
+    }
 
 }
