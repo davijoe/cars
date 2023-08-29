@@ -13,39 +13,38 @@ import lombok.Setter;
 public class Member extends AdminDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(nullable = false, length = 45, unique = true)
+    private String username;
 
     @Column(nullable = false, length = 45, unique = true)
-    String username;
-
-    @Column(nullable = false, length = 45, unique = true)
-    String email;
+    private String email;
 
     @Column(nullable = false, length = 45)
-    String password;
+    private String password;
 
     @Column(nullable = false, length = 45)
-    String firstName;
+    private String firstName;
 
     @Column(nullable = false, length = 45)
-    String lastName;
+    private String lastName;
 
     @Column(length = 65)
-    String street;
+    private String street;
 
     @Column(length = 45)
-    String city;
+    private String city;
 
     @Column(length = 10)
-    int zip;
+    private String zip;
 
     @Column(nullable = false)
-    boolean approved;
+    private boolean approved;
 
-    int ranking;
+    private int ranking;
 
-    public Member(String username, String email, String password, String firstName, String lastName, String street, String city, int zip, boolean approved, int ranking){
+    public Member(String username, String email, String password,
+                  String firstName, String lastName, String street,
+                  String city, String zip){
         this.username = username;
         this.email = email;
         this.password = password;
@@ -54,8 +53,6 @@ public class Member extends AdminDetails {
         this.street = street;
         this.city = city;
         this.zip = zip;
-        this.approved = approved;
-        this.ranking = ranking;
     }
 
     public Member(String username, String password, String email, String firstName, String lastName, String street, String city, int zip) {

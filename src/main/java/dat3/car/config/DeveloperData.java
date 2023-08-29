@@ -140,7 +140,7 @@ public class DeveloperData implements ApplicationRunner {
         System.out.println("Successfully saved all cars");
 
         List<Member> members = new ArrayList<>();
-        members.add(new Member("user1", "example1@example.com", "letmein", "Anders", "Andersen","Eksempelvænget 1", "Eksempelby",1234,false,0));
+        members.add(new Member("user1", "example1@example.com", "letmein", "Anders", "Andersen","Eksempelvænget 1", "Eksempelby","1234"));
 
         memberRepository.saveAll(members);
 
