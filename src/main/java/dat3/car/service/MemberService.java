@@ -5,12 +5,13 @@ import dat3.car.dto.MemberResponse;
 import dat3.car.entity.Member;
 import dat3.car.repository.MemberRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class MemberService {
@@ -22,12 +23,13 @@ public class MemberService {
 
     public List<MemberResponse> getMembers(boolean includeAll) {
         List<Member> members = memberRepository.findAll();
-        List<MemberResponse> response = new ArrayList<>();
-        for (Member member : members){
-            MemberResponse mr = new MemberResponse(member, includeAll);
-            response.add(mr);
-        }
-        return response;
+//        List<MemberResponse> response = new ArrayList<>();
+//        for (Member member : members){
+//            MemberResponse mr = new MemberResponse(member, includeAll);
+//            response.add(mr);
+//        }
+        List<MemberResponse> response = members.stream().map(member -> new MemberResponse(member, includeAll)).toList();
+        return members.stream().map((member -> new MemberResponse(member,includeAll))).toList();
     }
 
     public MemberResponse findById(String username){
@@ -65,7 +67,7 @@ public class MemberService {
     }
 
     private Member getMemberByUsername(String username){
-        return memberRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"No member with this username exist"));
+        return memberRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"No member with this username exist"));
     }
 
     public void deleteMemberByUsername(String username){
