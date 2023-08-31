@@ -1,9 +1,18 @@
 # Cars 'R' Us
 ### What are the benefits of using a RESTful API
-   It uses the standard HTTP methods GET,POST,PUT, PATCH, and DELETE as seen in the files */api/MemberController.java* and */api/CarController.java*\
-   They are platform agnostic meaning that any client that can make HTTP requests can utilize them. As such we can easily test our endpoints with the Postman application. In both week 1 and 2 we experimented with GET, POST, and PUT requests through Postman.\
-   GET http://localhost:8080/api/members \
-   PUT
+It uses the standard HTTP methods GET,POST,PUT, PATCH, and DELETE as seen in the files */api/MemberController.java* and */api/CarController.java*\
+They are platform-agnostic meaning that any client that can make HTTP requests can utilize them. As such we can easily test our endpoints with the Postman application. In both week 1 and 2 we experimented with GET, POST, and PUT requests through Postman.
+
+We used: \
+GET http://localhost:8080/api/members \
+POST http://localhost:8080/api/members \
+PUT http://localhost:8080/api/members/user1 \
+Note that a user is specified in the URL on the PUT request, since we need to specify what user we are patching information for.
+
+We chose to format it as JSON for both insertion and extraction. RESTful supports other common formats, like XML, as well.
+
+REST encourages a clear separation of client and server. In this project 
+
 ### What is JSON, and why does JSON fit so well with REST?
    Your short summary here
 ### How you have designed simple CRUD endpoints using spring boot and DTOs to separate api from data
