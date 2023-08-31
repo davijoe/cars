@@ -24,9 +24,13 @@ public class Car extends AdminDetails {
     @Column(name = "rental_price_day")
     double pricePrDay;
 
-    public Car(String brand, String model, double pricePrDay){
+    @Column(name = "max_discount")
+    int bestDiscount;
+
+    public Car(String brand, String model, double pricePrDay, int bestDiscount){
         this.brand = brand;
         this.model = model;
         this.pricePrDay = pricePrDay;
+        this.bestDiscount = bestDiscount;
     }
 }
