@@ -13,7 +13,7 @@ public class Car extends AdminDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    int id;
 
     @Column(name = "car_brand", length = 50, nullable = false)
     String brand;
