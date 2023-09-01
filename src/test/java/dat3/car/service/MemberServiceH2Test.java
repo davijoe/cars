@@ -67,8 +67,14 @@ class MemberServiceH2Test {
 
     @Test
         /* Remember MemberRequest comes from the API layer, and MemberResponse is returned to the API layer
-         * Internally addMember savex a Member entity to the database*/
+         * Internally addMember saves a Member entity to the database*/
     void testAddMember_UserDoesNotExist() {
+
+        Member m3 = memberRepository.save(new Member("user03", "email03@abc.dk", "pw03", "fn03", "ln03", "street03", "city03", "zip03"));
+        memberService = new MemberService(memberRepository);
+
+        System.out.println(m3.getCity());
+
         //Add @AllArgsConstructor to MemberRequest and @Builder to MemberRequest for this to work
         //TODO
     }

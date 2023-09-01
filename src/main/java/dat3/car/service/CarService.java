@@ -81,7 +81,6 @@ public class CarService {
         return carRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Car not found"));
     }
 
-
     public void deleteCarById(int id){
         Car car = getCarById(id);
         carRepository.delete(car);
