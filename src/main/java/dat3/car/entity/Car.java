@@ -16,17 +16,29 @@ public class Car extends AdminDetails {
     private int id;
 
     @Column(name = "car_brand", length = 50, nullable = false)
-    String brand;
+    private String brand;
 
     @Column(name = "car_model", length = 60, nullable = false)
-    String model;
+    private String model;
 
     @Column(name = "rental_price_day")
-    double pricePrDay;
+    private double pricePrDay;
 
-    public Car(String brand, String model, double pricePrDay){
+    @Column(name = "max_discount")
+    private int bestDiscount;
+
+    public Car(String brand, String model, double pricePrDay, int bestDiscount){
         this.brand = brand;
         this.model = model;
         this.pricePrDay = pricePrDay;
+        this.bestDiscount = bestDiscount;
+    }
+
+    public Car(int id, String brand, String model, double pricePrDay, int bestDiscount) {
+        super();
+    }
+
+    public Car(String toyota, String camry) {
+        super();
     }
 }

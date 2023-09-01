@@ -31,6 +31,7 @@ public class DeveloperData implements ApplicationRunner {
         List<Car> cars = new ArrayList<>();
 
         //DevData uden max discount
+        /*
         cars.add(new Car("Acura","Integra",1504.41));
         cars.add(new Car("Alfa Romeo","164",1577.65));
         cars.add(new Car("Audi","100",831.09));
@@ -81,9 +82,9 @@ public class DeveloperData implements ApplicationRunner {
         cars.add(new Car("Volkswagen","Arteon",959.83));
         cars.add(new Car("Volkswagen","Golf",659.39));
         cars.add(new Car("Volvo","240",798.92));
+        */
 
         //Devdata MED max discount
-        /*
         cars.add(new Car("Acura","Integra",1504.41,168));
         cars.add(new Car("Alfa Romeo","164",1577.65,140));
         cars.add(new Car("Audi","100",831.09,380));
@@ -134,7 +135,7 @@ public class DeveloperData implements ApplicationRunner {
         cars.add(new Car("Volkswagen","Arteon",959.83,265));
         cars.add(new Car("Volkswagen","Golf",659.39,321));
         cars.add(new Car("Volvo","240",798.92,257));
-        */
+
         carRepository.saveAll(cars);
 
         System.out.println("Successfully saved all cars");
