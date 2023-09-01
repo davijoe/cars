@@ -12,20 +12,21 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CarRequest {
 
+    int id;
     String brand;
     String model;
     double pricePrDay;
     int bestDiscount;
 
     public static Car getCarEntity(CarRequest c){
-        return new Car(c.getBrand(), c.getModel(), c.getPricePrDay(), c.getBestDiscount());
+        return new Car(c.brand, c.model, c.pricePrDay, c.bestDiscount);
     }
 
     public CarRequest(Car c){
+        this.id = c.getId();
         this.brand = c.getBrand();
         this.model = c.getModel();
         this.pricePrDay = c.getPricePrDay();
         this.bestDiscount = c.getBestDiscount();
     }
-
 }

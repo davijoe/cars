@@ -16,28 +16,27 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarResponse {
 
-        int id;
-        String brand;
-        String model;
-        double pricePrDay;
+    Integer id;
+    String brand;
+    String model;
+    Double pricePrDay;
+    Integer bestDiscount;
+    LocalDateTime created;
 
-        
-        LocalDateTime created;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    LocalDateTime edited;
 
-        @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
-        LocalDateTime edited;
-        Integer bestDiscount;
 
-        //Convert Car Entity to Car DTO
-        public CarResponse(Car c, boolean includeAll){
-            this.id = c.getId();
-            this.brand = c.getBrand();
-            this.model = c.getModel();
-            this.pricePrDay = c.getPricePrDay();
-            if(includeAll){
-                this.created = c.getCreated();
-                this.edited = c.getEdited();
-                this.bestDiscount = c.getBestDiscount();
-            }
+    //Convert Car Entity to Car DTO
+    public CarResponse(Car c, boolean includeAll){
+        this.id = c.getId();
+        this.brand = c.getBrand();
+        this.model = c.getModel();
+        this.pricePrDay = c.getPricePrDay();
+        if(includeAll){
+            this.created = c.getCreated();
+            this.edited = c.getEdited();
+            this.bestDiscount = c.getBestDiscount();
         }
+    }
 }

@@ -16,7 +16,7 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    //Security ??? Admin access only (mangler)
+    //Security --> Admin
     @GetMapping
     List<MemberResponse> getMembers(){
         return memberService.getMembers(false);
@@ -29,7 +29,6 @@ public class MemberController {
     }
 
     //Security --> Anonymous
-    // Før: @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PostMapping()
     MemberResponse addMember(@RequestBody MemberRequest body){
         return memberService.addMember(body);
