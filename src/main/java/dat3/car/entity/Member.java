@@ -40,7 +40,6 @@ public class Member extends AdminDetails {
     @Column(length = 10)
     private String zip;
 
-    @Column(nullable = false)
     private boolean approved;
 
     private int ranking;
@@ -56,8 +55,5 @@ public class Member extends AdminDetails {
         this.street = street;
         this.city = city;
         this.zip = zip;
-    }
-
-    public void addRole(int user) {
     }
 }

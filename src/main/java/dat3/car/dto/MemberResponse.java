@@ -23,7 +23,7 @@ public class MemberResponse {
     String street;
     String city;
     String zip;
-    //@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
+
     LocalDateTime created;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
@@ -42,7 +42,7 @@ public class MemberResponse {
         this.zip = m.getZip();
         if(includeAll){
             this.created = m.getCreated();
-            this.edited = m.getLastEdited();
+            this.edited = m.getEdited();
             this.approved = m.isApproved();
             this.ranking = m.getRanking();
         }

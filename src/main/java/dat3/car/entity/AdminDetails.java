@@ -16,16 +16,13 @@ that contains common fields and mappings and it's super simple to implement
 OBSERVE --> The base class is not an entity by itself and is NEVER used directly in queries.
  */
 
-@Setter
 @Getter
+@Setter
 @MappedSuperclass
 public abstract class AdminDetails {
+
     @CreationTimestamp
     protected LocalDateTime created;
     @UpdateTimestamp
     protected LocalDateTime edited;
-
-    public LocalDateTime getLastEdited() {
-        return edited;
-    }
 }
