@@ -131,7 +131,9 @@ class MemberServiceH2Test {
         res.setUsername("blabla");
 
         ResponseStatusException ex = Assertions.assertThrows(ResponseStatusException.class,
-                () -> memberService.editMember(res, "thisuserdoesnotexist"));
+                () -> memberService.editMember(res, "iDontExist")); //username must not exist for the test to pass
+        //Printing status and reason to the console
+        System.out.println(ex.getStatusCode() + " - Explanation: " + ex.getReason());
         assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
     }
 
@@ -170,6 +172,10 @@ class MemberServiceH2Test {
 
     @Test
     void testDeleteMember_ThatDontExist() {
-        //TODO
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                   () -> memberService.deleteMemberByUsername("I dont exist"));
+        //prints the error status and reason to the console
+        System.out.println(ex.getStatusCode() + " - Explanation: " + ex.getReason());
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
     }
 }
