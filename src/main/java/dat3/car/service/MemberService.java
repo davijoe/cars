@@ -21,15 +21,13 @@ public class MemberService {
 
     public List<MemberResponse> getMembers(boolean includeAll) {
         List<Member> members = memberRepository.findAll();
-//        List<MemberResponse> response = new ArrayList<>();
-//        for (Member member : members){
-//            MemberResponse mr = new MemberResponse(member, includeAll);
-//            response.add(mr);
-//        }
-//        List<MemberResponse> response = members.stream().map(member -> new MemberResponse(member, includeAll)).toList();
 
-//        return members.stream().map((member -> new MemberResponse(member,includeAll))).toList();
-        return members.stream().map(MemberResponse::new).collect(Collectors.toList());
+        //Convert List<Member> to Stream<Member>
+        return members.stream()
+                //Map each member object from stream to a MemberResponse object
+                .map(MemberResponse::new) //Use the constructor reference from MemberResponse
+                //Collect stream of MemberResponse objects to a List<MemberResponse>
+                .collect(Collectors.toList());
     }
 
     public MemberResponse findById(String username){
@@ -86,14 +84,4 @@ public class MemberService {
         return memberRepository.findMemberByEmail(email).
                 orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"No member with this first name exist"));
     }
-
-
-
-
-
-
-
-
-
-
 }
