@@ -43,16 +43,19 @@ public class CarService {
     }
 
 
-    public ResponseEntity<Boolean> editCar(CarRequest body, int id){
-        Car car = carRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Car not found"));
-        if (body.getId()!=(id)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Can't change id");
+    public ResponseEntity<Boolean> editCar(CarRequest body, Integer id){
+        Car car = getCarById(id);
+        //Check if id is the same. If not, throw exception
+        if(!id.equals(body.getId())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"ID Cannot be changed");
         }
+
         car.setBrand(body.getBrand());
         car.setModel(body.getModel());
         car.setPricePrDay(body.getPricePrDay());
         car.setBestDiscount(body.getBestDiscount());
         carRepository.save(car);
+
         return ResponseEntity.ok(true);
     }
 

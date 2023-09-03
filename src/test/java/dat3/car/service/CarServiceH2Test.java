@@ -124,4 +124,18 @@ public class CarServiceH2Test {
         assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
     }
 
+    @Test
+    void testEditCarChangePrimaryKey(){
+        CarRequest request = new CarRequest(c1);
+        request.setId(42);
+
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                () -> carService.editCar(request, 1));
+        assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+        //printing status and reason to the console
+        System.out.println(ex.getStatusCode() + " - Reason: " + ex.getReason());
+        assertEquals("ID Cannot be changed", ex.getReason());
+    }
+
+
 }

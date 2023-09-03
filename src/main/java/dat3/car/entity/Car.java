@@ -13,7 +13,7 @@ public class Car extends AdminDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "car_brand", length = 50, nullable = false)
     private String brand;
@@ -34,7 +34,7 @@ public class Car extends AdminDetails {
         this.bestDiscount = bestDiscount;
     }
 
-    public Car(int id, String brand, String model, double pricePrDay, int bestDiscount) {
+    public Car(Integer id, String brand, String model, double pricePrDay, int bestDiscount) {
         super();
     }
 

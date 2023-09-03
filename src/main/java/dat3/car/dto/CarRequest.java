@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 public class CarRequest {
 
-    int id;
+    Integer id;
     String brand;
     String model;
     double pricePrDay;
