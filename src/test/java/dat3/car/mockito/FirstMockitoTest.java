@@ -17,8 +17,9 @@ public class FirstMockitoTest {
 
     @Test
     public void test(){
-        int num = 1;
-        assertEquals(1, num);
+        int num = 10;
+        int ab = num;
+        assertEquals(10, ab);
     }
 
 

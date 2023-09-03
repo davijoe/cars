@@ -4,15 +4,14 @@ import dat3.car.dto.MemberRequest;
 import dat3.car.dto.MemberResponse;
 import dat3.car.entity.Member;
 import dat3.car.repository.MemberRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.lang.reflect.Executable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,7 +36,6 @@ class MemberServiceH2Test {
     @Test
     void testGetMembersAllDetails() {
         List<MemberResponse> memberResponses = memberService.getMembers(true);
-        // assertEquals(2,memberResponses.size(),"Expects 2 members");
         LocalDateTime time = memberResponses.get(0).getCreated();
         assertNotNull(time,"Expects dates to be set when includeAll is true");
     }
@@ -56,39 +54,81 @@ class MemberServiceH2Test {
         assertEquals("email01@abc.dk",res.getEmail());
     }
 
+
     @Test
     void testFindByIdNotFound() {
-        //This should test that a ResponseStatus exception is thrown with status= 404 (NOT_FOUND)
-        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> memberService.findById("NonExistentUser"));
+    //Tests that ResponseStatus exception is thrown with status = 404 (NOT_FOUND)
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                () -> memberService.findById("NOT_ACTUALLY_A_USER"));
         assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
-
-        //TODO
     }
 
+    /* Remember MemberRequest comes from the API layer, and MemberResponse is returned to the API layer
+     * Internally addMember saves a Member entity to the database*/
     @Test
-        /* Remember MemberRequest comes from the API layer, and MemberResponse is returned to the API layer
-         * Internally addMember saves a Member entity to the database*/
     void testAddMember_UserDoesNotExist() {
-
-        Member m3 = memberRepository.save(new Member("user03", "email03@abc.dk", "pw03", "fn03", "ln03", "street03", "city03", "zip03"));
-        memberService = new MemberService(memberRepository);
-
-        System.out.println(m3.getCity());
-
-        //Add @AllArgsConstructor to MemberRequest and @Builder to MemberRequest for this to work
-        //TODO
+        MemberRequest request = MemberRequest.builder().
+                username("user03").
+                email("usermail3@mail.dk").
+                password("pw03").
+                firstName("fn03").
+                lastName("ln03").
+                build();
+        MemberResponse res = memberService.addMember(request);
+        assertEquals("user03", res.getUsername());
+        assertTrue(memberRepository.existsById("user03")); //Check that the member is actually saved to the database
     }
 
+
     @Test
-    void testAddMember_UserDoesExistThrows() {
-        //This should test that a ResponseStatus exception is thrown with status= 409 (BAD_REQUEST)
-        //TODO
+    public void testAddMember_UserDoesExistThrows() {
+        //Tests that ResponseStatus exception is thrown with status = 409 (BAD_REQUEST)
+        MemberRequest request = new MemberRequest();
+        request.setUsername("user01"); //This user already exists from our mock database / setUp() method
+
+        ResponseStatusException ex = Assertions.assertThrows(ResponseStatusException.class,
+                () -> memberService.addMember(request));
+
+        //obs: Assertions.assertEquals instead of assertEquals because migration to JUnit5
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
     }
 
     @Test
     void testEditMemberWithExistingUsername() {
         //TODO
+        MemberRequest request = new MemberRequest();
+
+        request.setUsername("user01");
+        request.setEmail("email01@abc.dk");
+        request.setFirstName("GodtFornavn");
+        request.setLastName("BedreEfternavn");
+
+        memberService.editMember(request, "user01");
+        MemberResponse response = memberService.findById("user01");
+
+        Assertions.assertEquals("user01", response.getUsername());
+        Assertions.assertEquals("email01@abc.dk", response.getEmail());
+        Assertions.assertEquals("GodtFornavn", response.getFirstName());
+        Assertions.assertEquals("BedreEfternavn", response.getLastName());
     }
+    @Test
+    void testEditMemberWithExistingEmail() {
+        //TODO
+        MemberRequest request = new MemberRequest();
+        MemberResponse response = memberService.findMemberByEmail("email01@abc.dk");
+
+        //System.out.println(response.getUsername());
+
+        request.setUsername("user01");
+        request.setFirstName("GodtFornavn");
+        request.setLastName("BedreEfternavn");
+        memberService.editMember(request, "user01");
+
+        //System.out.println(response.getEmail());
+
+        Assertions.assertEquals("user01", response.getUsername());
+    }
+
 
     @Test
     void testEditMemberNON_ExistingUsernameThrows() {

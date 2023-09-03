@@ -1,10 +1,13 @@
 package dat3.car.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -55,7 +58,6 @@ public class Member extends AdminDetails {
         this.zip = zip;
     }
 
-    public Member(String username, String password, String email, String firstName, String lastName, String street, String city, int zip) {
-        super();
+    public void addRole(int user) {
     }
 }

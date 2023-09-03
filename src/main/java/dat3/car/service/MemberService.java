@@ -8,14 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
-    final MemberRepository memberRepository;
+    MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -28,12 +26,18 @@ public class MemberService {
 //            MemberResponse mr = new MemberResponse(member, includeAll);
 //            response.add(mr);
 //        }
-        List<MemberResponse> response = members.stream().map(member -> new MemberResponse(member, includeAll)).toList();
-        return members.stream().map((member -> new MemberResponse(member,includeAll))).toList();
+//        List<MemberResponse> response = members.stream().map(member -> new MemberResponse(member, includeAll)).toList();
+
+//        return members.stream().map((member -> new MemberResponse(member,includeAll))).toList();
+        return members.stream().map(MemberResponse::new).collect(Collectors.toList());
     }
 
     public MemberResponse findById(String username){
         Member member = getMemberByUsername(username);
+        return new MemberResponse(member,true);
+    }
+    public MemberResponse findMemberByEmail(String email){
+        Member member = getMemberByEmail(email);
         return new MemberResponse(member,true);
     }
 
@@ -48,7 +52,7 @@ public class MemberService {
 
     public void editMember(MemberRequest body, String username){
         Member member = getMemberByUsername(username);
-        if(!body.getUsername().equals(username)){
+        if(!username.equals(body.getUsername())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cannot change username");
         }
         member.setPassword(body.getPassword());
@@ -60,18 +64,34 @@ public class MemberService {
         member.setZip(body.getZip());
         memberRepository.save(member);
     }
+
     public void setRankingForUser(String username, int value){
         Member member = getMemberByUsername(username);
         member.setRanking(value);
         memberRepository.save(member);
     }
 
-    private Member getMemberByUsername(String username){
-        return memberRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"No member with this username exist"));
-    }
-
     public void deleteMemberByUsername(String username){
         Member member = getMemberByUsername(username);
         memberRepository.delete(member);
     }
+
+    private Member getMemberByUsername(String username){
+        return memberRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"No member with this username exist"));
+    }
+
+    private Member getMemberByEmail(String email) {
+        return memberRepository.findMemberByEmail(email).
+                orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"No member with this first name exist"));
+    }
+
+
+
+
+
+
+
+
+
+
 }
