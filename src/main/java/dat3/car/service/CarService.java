@@ -32,15 +32,10 @@ public class CarService {
         Car car = getCarById(id);
         return new CarResponse(car, true);
     }
-        //Car car = carRepository.findById(id).orElseThrow(()->
-        //        new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car with this ID not found"));
-        //CarResponse response = new CarResponse(car, true);
-        //return new CarResponse(car, true);
-
 
     public CarResponse addCar(CarRequest body){
         if(carRepository.existsByBrandAndModel(body.getBrand(), body.getModel())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car with that model and brand already exist");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "That car already exist");
         }
         Car newCar = CarRequest.getCarEntity(body);
         carRepository.save(newCar);

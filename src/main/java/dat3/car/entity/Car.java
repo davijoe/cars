@@ -22,7 +22,7 @@ public class Car extends AdminDetails {
     private String model;
 
     @Column(name = "rental_price_day")
-    private double pricePrDay;
+    private Double pricePrDay;
 
     @Column(name = "max_discount")
     private int bestDiscount;

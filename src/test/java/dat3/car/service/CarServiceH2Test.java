@@ -4,6 +4,7 @@ import dat3.car.dto.CarRequest;
 import dat3.car.dto.CarResponse;
 import dat3.car.entity.Car;
 import dat3.car.repository.CarRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.data.util.TypeUtils.type;
@@ -51,20 +53,6 @@ public class CarServiceH2Test {
     }
 
     @Test
-    void testAddCar_CarDoesNotExist(){
-        CarRequest req = CarRequest.builder()
-                .brand("VW")
-                .model("Polo")
-                .pricePrDay(110.0)
-                .bestDiscount(11)
-                .build();
-        //addCar saves a Car entity to the database
-        CarResponse res = carService.addCar(req);
-        assertEquals("VW",res.getBrand());
-        assertTrue(carRepository.existsById(res.getId())); //Check that the member is actually saved to the database
-    }
-
-    @Test
     void testFindByIdFound() {
         CarResponse res = carService.findById(1);
         assertEquals("Toyota",res.getBrand());
@@ -77,8 +65,53 @@ public class CarServiceH2Test {
         //Tests that ResponseStatus exception is thrown with status = 404 (NOT_FOUND)
         ResponseStatusException ex = assertThrows(ResponseStatusException.class,
                 () -> carService.findById(666));
-
         assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
         System.out.println(ex.getStatusCode() + ": Reason:" + ex.getReason());
-    };
+    }
+
+    @Test
+    void testAddCar_CarDoesNotExist(){
+        CarRequest req = CarRequest.builder()
+                .brand("VW")
+                .model("Polo")
+                .pricePrDay(110.0)
+                .bestDiscount(11)
+                .build();
+
+        //addCar saves a Car entity to the database
+        CarResponse res = carService.addCar(req);
+        assertEquals("VW",res.getBrand());
+        assertTrue(carRepository.existsById(res.getId())); //Check that the member is actually saved to the database
+    }
+
+    @Test
+    void testAddCar_CarAlreadyExist(){
+        CarRequest request = new CarRequest();
+        request.setBrand("Toyota");
+        request.setModel("Yaris");
+
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                () -> carService.addCar(request));
+
+        assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+        System.out.println(ex.getStatusCode() + " - Reason: " + ex.getReason());
+    }
+
+    @Test
+    void testEditCarWithExistingId(){
+        //Change Car c1 from Toyota Yaris to VW Polo
+        CarRequest request = new CarRequest(c1);
+        request.setBrand("VW");
+        request.setModel("Polo");
+
+        carService.editCar(request, 1);
+        CarResponse res = carService.findById(1);
+
+        assertEquals("VW", res.getBrand());
+        assertEquals("Polo", res.getModel());
+    }
+
+
+
+
 }
