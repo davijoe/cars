@@ -95,9 +95,7 @@ class MemberServiceH2Test {
 
     @Test
     void testEditMemberWithExistingUsername() {
-        //TODO
-        MemberRequest request = new MemberRequest();
-
+        MemberRequest request = new MemberRequest(m1);
         request.setUsername("user01");
         request.setEmail("email01@abc.dk");
         request.setFirstName("GodtFornavn");
@@ -106,27 +104,24 @@ class MemberServiceH2Test {
         memberService.editMember(request, "user01");
         MemberResponse response = memberService.findById("user01");
 
-        Assertions.assertEquals("user01", response.getUsername());
-        Assertions.assertEquals("email01@abc.dk", response.getEmail());
-        Assertions.assertEquals("GodtFornavn", response.getFirstName());
-        Assertions.assertEquals("BedreEfternavn", response.getLastName());
+        assertEquals("user01", response.getUsername());
+        assertEquals("email01@abc.dk", response.getEmail());
+        assertEquals("GodtFornavn", response.getFirstName());
+        assertEquals("BedreEfternavn", response.getLastName());
     }
     @Test
     void testEditMemberWithExistingEmail() {
-        //TODO
-        MemberRequest request = new MemberRequest();
-        MemberResponse response = memberService.findMemberByEmail("email01@abc.dk");
-
-        //System.out.println(response.getUsername());
-
+        MemberRequest request = new MemberRequest(m1);
         request.setUsername("user01");
         request.setFirstName("GodtFornavn");
         request.setLastName("BedreEfternavn");
+
         memberService.editMember(request, "user01");
+        MemberResponse response = memberService.findMemberByEmail("email01@abc.dk");
 
-        //System.out.println(response.getEmail());
-
-        Assertions.assertEquals("user01", response.getUsername());
+        assertEquals("user01", response.getUsername());
+        assertEquals("GodtFornavn", response.getFirstName());
+        assertEquals("BedreEfternavn", response.getLastName());
     }
 
 
