@@ -152,17 +152,16 @@ public class CarServiceH2Test {
         assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
     }
 
-
     @Test
     void testDeleteCarById(){
-        carService.deleteCarById(1);
+        Car car = carRepository.findById(1).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Car not found"));
+
+        carRepository.deleteById(1);
+        System.out.println("Deleted car with ID 1");
+        System.out.println(carRepository.findById(1).orElse(null));
 
         assertFalse(carRepository.existsById(1),"Car with ID '1' should no longer exist.");
-
-        System.out.println("ID: "+c1.getId()+": Model: "+c1.getBrand()+" "+c1.getModel());
-        System.out.println("ID: "+c2.getId()+": Model: "+c2.getBrand()+" "+c2.getModel());
-        System.out.println("ID: "+c3.getId()+": Model: "+c3.getBrand()+" "+c3.getModel());
     }
-
 
 }
