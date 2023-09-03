@@ -72,13 +72,13 @@ class MemberServiceH2Test {
     //MemberResponse is returned to the API layer
     @Test
     void testAddMember_UserDoesNotExist() {
-        MemberRequest request = MemberRequest.builder().
-                username("user03").
-                email("usermail3@mail.dk").
-                password("pw03").
-                firstName("fn03").
-                lastName("ln03").
-                build();
+        MemberRequest request = MemberRequest.builder()
+                .username("user03")
+                .email("usermail3@mail.dk")
+                .password("pw03")
+                .firstName("fn03")
+                .lastName("ln03")
+                .build();
 
         //addMember saves a Member entity to the database
         MemberResponse res = memberService.addMember(request);

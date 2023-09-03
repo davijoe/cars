@@ -1,5 +1,6 @@
 package dat3.car.service;
 
+import dat3.car.dto.CarRequest;
 import dat3.car.dto.CarResponse;
 import dat3.car.entity.Car;
 import dat3.car.repository.CarRepository;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.data.util.TypeUtils.type;
 
 @DataJpaTest
 public class CarServiceH2Test {
@@ -46,6 +48,26 @@ public class CarServiceH2Test {
         assertNull(time,"Should be null when includeAll is false");
     }
 
+    @Test
+    void testAddCar_CarDoesNotExist(){
+        CarRequest req = CarRequest.builder()
+                .brand("VW")
+                .model("Polo")
+                .pricePrDay(110.0)
+                .bestDiscount(11)
+                .build();
+        //addCar saves a Car entity to the database
+        CarResponse res = carService.addCar(req);
+        assertEquals("VW",res.getBrand());
+        assertTrue(carRepository.existsById(res.getId())); //Check that the member is actually saved to the database
+    }
 
+    @Test
+    void testFindByIdFound() {
+        CarResponse res = carService.findById(1);
+        assertEquals("Toyota",res.getBrand());
+        assertEquals("Yaris",res.getModel());
+        System.out.println(res.getCreated());
+    }
 
 }
