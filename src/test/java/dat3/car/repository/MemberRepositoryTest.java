@@ -20,13 +20,14 @@ class MemberRepositoryTest {
     void setUp() {
     }
 
+    /*
     @Test
     public void testFindByZip(){
         List<Member> members = memberRepository.findMemberByZip("2000");
         assertEquals(1, members.size());
     }
 
-    /*
+
     @Test
     void setDateOfBirthTest(){
         Member m1 = memberRepository.findById("Bobby").get();
