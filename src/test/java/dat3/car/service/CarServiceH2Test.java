@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -70,4 +72,13 @@ public class CarServiceH2Test {
         System.out.println(res.getCreated());
     }
 
+    @Test
+    void testFindByIdNotFound() {
+        //Tests that ResponseStatus exception is thrown with status = 404 (NOT_FOUND)
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                () -> carService.findById(666));
+
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+        System.out.println(ex.getStatusCode() + ": Reason:" + ex.getReason());
+    };
 }

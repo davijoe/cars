@@ -29,11 +29,14 @@ public class CarService {
     }
 
     public CarResponse findById(int id){
-        Car car = carRepository.findById(id).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car with this ID not found"));
-        CarResponse response = new CarResponse(car, true);
+        Car car = getCarById(id);
         return new CarResponse(car, true);
     }
+        //Car car = carRepository.findById(id).orElseThrow(()->
+        //        new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car with this ID not found"));
+        //CarResponse response = new CarResponse(car, true);
+        //return new CarResponse(car, true);
+
 
     public CarResponse addCar(CarRequest body){
         if(carRepository.existsByBrandAndModel(body.getBrand(), body.getModel())){

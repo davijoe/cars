@@ -61,7 +61,7 @@ class MemberServiceH2Test {
 
     @Test
     void testFindByIdNotFound() {
-    //Tests that ResponseStatus exception is thrown with status = 404 (NOT_FOUND)
+        //Tests that ResponseStatus exception is thrown with status = 404 (NOT_FOUND)
         ResponseStatusException ex = assertThrows(ResponseStatusException.class,
                 () -> memberService.findById("NOT_ACTUALLY_A_USER"));
         assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
