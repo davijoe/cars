@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberRequest {
-    String username;
+    protected String username;
     String email;
     String password;
     String firstName;

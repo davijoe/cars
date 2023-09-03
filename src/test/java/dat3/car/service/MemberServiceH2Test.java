@@ -137,12 +137,19 @@ class MemberServiceH2Test {
 
     @Test
     void testEditMemberChangePrimaryKeyThrows() {
-        //Create a MemberRequest from an existing member we can edit
-        MemberRequest request = new MemberRequest(m1);
-        //TODO
-    }
+        MemberRequest req = new MemberRequest(m1);
+        req.setUsername("user03");
 
-//Under her resten
+        //Tests that ResponseStatus exception is thrown with status = 400
+        // (BAD_REQUEST) when trying to change primary key (username)
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                () -> memberService.editMember(req, "user01"));
+        assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+
+        //prints the error status and reason to the console
+        System.out.println(ex.getStatusCode() + " - Explanation: " + ex.getReason());
+        assertEquals("Usernames cannot be changed", ex.getReason());
+    }
 
     @Test
     void testSetRankingForUser() {

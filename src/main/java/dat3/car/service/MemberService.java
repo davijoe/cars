@@ -50,11 +50,13 @@ public class MemberService {
         return new MemberResponse(newMember, true);
     }
 
-    public void editMember(MemberRequest body, String username){
+    public void editMember(MemberRequest body, String username) {
         Member member = getMemberByUsername(username);
-        if(!username.equals(body.getUsername())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cannot change username");
+
+        if (!username.equals(body.getUsername())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usernames cannot be changed");
         }
+
         member.setPassword(body.getPassword());
         member.setEmail(body.getEmail());
         member.setFirstName(body.getFirstName());
