@@ -167,13 +167,17 @@ class MemberServiceH2Test {
 
     @Test
     void testSetRankingForNoExistingUser() {
-        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> memberService.setRankingForUser("UserThatDoesNotExist",1));
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                () -> memberService.setRankingForUser("UserThatDoesNotExist",1));
         assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
     }
     @Test
     void testDeleteMemberByUsername() {
         memberService.deleteMemberByUsername("user01");
+
         assertFalse(memberRepository.existsById("user01"),"Should be false after deleting member");
+        System.out.println(m1.getUsername());
+        System.out.println(m2.getUsername());
     }
 
     @Test

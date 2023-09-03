@@ -77,7 +77,8 @@ public class MemberService {
     }
 
     private Member getMemberByUsername(String username){
-        return memberRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"No member with this username exist"));
+        return memberRepository.findById(username)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"No member with this username exist"));
     }
 
     private Member getMemberByEmail(String email) {

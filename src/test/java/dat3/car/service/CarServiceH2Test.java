@@ -137,5 +137,32 @@ public class CarServiceH2Test {
         assertEquals("ID Cannot be changed", ex.getReason());
     }
 
+    @Test
+    void testSetBestDiscountForCar(){
+        carService.setBestDiscountForCar(1,42);
+        assertEquals(42, c1.getBestDiscount());
+    }
+
+    @Test
+    void testSetBestDiscountForNonExistentCar(){
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                () -> carService.setBestDiscountForCar(666,42));
+        //printing status and reason to the console
+        System.out.println(ex.getStatusCode() + " - Reason: " + ex.getReason());
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+    }
+
+
+    @Test
+    void testDeleteCarById(){
+        carService.deleteCarById(1);
+
+        assertFalse(carRepository.existsById(1),"Car with ID '1' should no longer exist.");
+
+        System.out.println("ID: "+c1.getId()+": Model: "+c1.getBrand()+" "+c1.getModel());
+        System.out.println("ID: "+c2.getId()+": Model: "+c2.getBrand()+" "+c2.getModel());
+        System.out.println("ID: "+c3.getId()+": Model: "+c3.getBrand()+" "+c3.getModel());
+    }
+
 
 }
