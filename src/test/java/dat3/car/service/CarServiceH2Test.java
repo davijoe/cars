@@ -11,8 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 public class CarServiceH2Test {
@@ -38,8 +37,15 @@ public class CarServiceH2Test {
         assertEquals(3, carResponses.size(),"Expects three cars in the list");
         LocalDateTime time = carResponses.get(0).getCreated();
         assertNotNull(time,"Expects dates to be set when includeAll is true");
-        System.out.println(time); //TODO: Fix this test
     }
+
+    @Test
+    void testGetCarsNoDetails() {
+        List<CarResponse> carResponses = carService.getCars(false);
+        LocalDateTime time = carResponses.get(0).getCreated();
+        assertNull(time,"Should be null when includeAll is false");
+    }
+
 
 
 }
