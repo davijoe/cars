@@ -111,7 +111,17 @@ public class CarServiceH2Test {
         assertEquals("Polo", res.getModel());
     }
 
+    @Test
+    void testEditCarWithNonExistingId(){
+        //Change Car c1 from Toyota Yaris to VW Polo
+        CarRequest request = new CarRequest(c1);
+        request.setId(42);
 
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class,
+                () -> carService.editCar(request, 42));
 
+        System.out.println(ex.getStatusCode() + " - Reason: " + ex.getReason());
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+    }
 
 }
