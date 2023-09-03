@@ -124,11 +124,15 @@ class MemberServiceH2Test {
         assertEquals("BedreEfternavn", response.getLastName());
     }
 
-
     @Test
     void testEditMemberNON_ExistingUsernameThrows() {
         //This should test that a ResponseStatus exception is thrown with status= 404 (NOT_FOUND)
-        //TODO
+        MemberRequest res = new MemberRequest(m1);
+        res.setUsername("blabla");
+
+        ResponseStatusException ex = Assertions.assertThrows(ResponseStatusException.class,
+                () -> memberService.editMember(res, "thisuserdoesnotexist"));
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
     }
 
     @Test
