@@ -4,7 +4,6 @@ import dat3.car.dto.CarRequest;
 import dat3.car.dto.CarResponse;
 import dat3.car.entity.Car;
 import dat3.car.repository.CarRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +13,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.data.util.TypeUtils.type;
 
 @DataJpaTest
 public class CarServiceH2Test {
@@ -55,8 +52,10 @@ public class CarServiceH2Test {
     @Test
     void testFindByIdFound() {
         CarResponse res = carService.findById(1);
+
         assertEquals("Toyota",res.getBrand());
         assertEquals("Yaris",res.getModel());
+
         System.out.println(res.getCreated());
     }
 
@@ -101,6 +100,7 @@ public class CarServiceH2Test {
     void testEditCarWithExistingId(){
         //Change Car c1 from Toyota Yaris to VW Polo
         CarRequest request = new CarRequest(c1);
+        request.setId(1);
         request.setBrand("VW");
         request.setModel("Polo");
 
@@ -131,6 +131,7 @@ public class CarServiceH2Test {
 
         ResponseStatusException ex = assertThrows(ResponseStatusException.class,
                 () -> carService.editCar(request, 1));
+
         assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
         //printing status and reason to the console
         System.out.println(ex.getStatusCode() + " - Reason: " + ex.getReason());
@@ -163,5 +164,4 @@ public class CarServiceH2Test {
 
         assertFalse(carRepository.existsById(1),"Car with ID '1' should no longer exist.");
     }
-
 }
