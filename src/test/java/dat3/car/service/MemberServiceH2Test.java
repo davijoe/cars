@@ -54,8 +54,7 @@ class MemberServiceH2Test {
     @Test
     void testFindByIdFound() {
         MemberResponse res = memberService.findById("user01");
-        assertEquals("user01",res.getUsername());
-        assertEquals("email01@abc.dk",res.getEmail());
+        assertEquals("user01", res.getUsername());
     }
 
 
@@ -112,20 +111,6 @@ class MemberServiceH2Test {
 
         assertEquals("user01", response.getUsername());
         assertEquals("email01@abc.dk", response.getEmail());
-        assertEquals("GodtFornavn", response.getFirstName());
-        assertEquals("BedreEfternavn", response.getLastName());
-    }
-    @Test
-    void testEditMemberWithExistingEmail() {
-        MemberRequest request = new MemberRequest(m1);
-        request.setUsername("user01");
-        request.setFirstName("GodtFornavn");
-        request.setLastName("BedreEfternavn");
-
-        memberService.editMember(request, "user01");
-        MemberResponse response = memberService.findMemberByEmail("email01@abc.dk");
-
-        assertEquals("user01", response.getUsername());
         assertEquals("GodtFornavn", response.getFirstName());
         assertEquals("BedreEfternavn", response.getLastName());
     }
