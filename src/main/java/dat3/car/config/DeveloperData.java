@@ -101,8 +101,9 @@ public class DeveloperData implements ApplicationRunner {
         System.out.println("Successfully saved all members");
 
         List<Reservation> reservations = new ArrayList<>();
-        reservations.add(new Reservation(LocalDate.of(2023, 11, 21), cars.get(0), members.get(0)));
+        reservations.add(new Reservation(LocalDate.of(2023, 11, 22), cars.get(0), members.get(0)));
         reservations.add(new Reservation(LocalDate.of(2023, 11, 22), cars.get(1), members.get(1)));
+        reservations.add(new Reservation(LocalDate.of(2023, 11, 23), cars.get(2), members.get(0)));
         reservationRepository.saveAll(reservations);
         System.out.println("Successfully saved all reservations");
 
