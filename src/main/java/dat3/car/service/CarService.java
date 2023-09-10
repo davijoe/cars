@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarService {
@@ -23,9 +24,12 @@ public class CarService {
 
     public List<CarResponse> getCars(boolean includeAll){
         List<Car> cars = carRepository.findAll();
+        /*
         List<CarResponse> response = cars.stream().map(car ->
                 new CarResponse(car, includeAll)).toList();
         return cars.stream().map(car -> new CarResponse(car, includeAll)).toList();
+        */
+        return cars.stream().map(car -> new CarResponse(car, includeAll)).collect(Collectors.toList());
     }
 
     public CarResponse findById(int id){

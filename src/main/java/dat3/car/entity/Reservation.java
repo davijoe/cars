@@ -19,6 +19,8 @@ public class Reservation extends AdminDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private LocalDate rentalDate;
+
     @ManyToOne
     //@JoinColumn(name = "member_id")
     private Member member;
@@ -27,15 +29,14 @@ public class Reservation extends AdminDetails{
     //@JoinColumn(name = "car_id")
     private Car car;
 
-    private LocalDate rentalDate;
-    private LocalDate reservationDate;
+    //private LocalDate rentalDate;
 
-    public Reservation(LocalDate reservationDate, Car car, Member member) {
-        this.reservationDate = reservationDate;
+
+    public Reservation(LocalDate rentalDate, Car car, Member member) {
+        this.rentalDate = rentalDate;
         this.car = car;
         this.member = member;
-        member.addReservation(this);
         car.addReservation(this);
+        member.addReservation(this);
     }
 }
-    //private LocalDate returnDate; ?
