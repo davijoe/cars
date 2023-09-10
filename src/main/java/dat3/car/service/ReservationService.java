@@ -37,6 +37,7 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
+
     public ReservationResponse addReservation(ReservationRequest body) {
         if(body.getDate().isBefore(LocalDate.now())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation date cannot be in the past");
@@ -51,5 +52,7 @@ public class ReservationService {
         Reservation reservation = reservationRepository.save(new Reservation(body.getDate(),car,member));
         return new ReservationResponse(reservation);
     }
+
+
 
 }

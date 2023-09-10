@@ -24,6 +24,16 @@ public class CarController {
         return carService.getCars(false);
     }
 
+    @GetMapping("/brand/{brand}")
+    List<CarResponse> getCarsByBrand(@PathVariable String brand){
+        return carService.getCarsByBrand(brand, false);
+    }
+
+    @GetMapping("/unreserved")
+    List<CarResponse> getUnreservedCars(){
+        return carService.getUnreservedCars();
+    }
+
     //Security ???
     @GetMapping(path = "/{id}")
     CarResponse getCarById(@PathVariable int id) throws Exception {

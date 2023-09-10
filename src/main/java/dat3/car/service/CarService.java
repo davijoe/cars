@@ -32,6 +32,16 @@ public class CarService {
         return cars.stream().map(car -> new CarResponse(car, includeAll)).collect(Collectors.toList());
     }
 
+    public List<CarResponse> getCarsByBrand(String brand, boolean includeAll){
+        List<Car> cars = carRepository.findAllByBrand(brand);
+        return cars.stream().map(car -> new CarResponse(car, includeAll)).collect(Collectors.toList());
+    }
+
+    public List<CarResponse> getUnreservedCars(){
+        List<Car> cars = carRepository.findAll();
+        return cars.stream().filter(car -> car.getReservations().isEmpty()).map(car -> new CarResponse(car, false)).collect(Collectors.toList());
+    }
+
     public CarResponse findById(int id){
         Car car = carRepository.findById(id).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car with this ID not found"));
