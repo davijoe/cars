@@ -6,12 +6,13 @@ import dat3.car.entity.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor //A must for @Builder
-@Builder  //I will demo its purpose in the class
+@Builder
 //It's really IMPORTANT that you understand the purpose of this annotation
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberResponse {
@@ -30,6 +31,7 @@ public class MemberResponse {
     LocalDateTime edited;
     Integer ranking;
     Boolean approved;
+    List<ReservationResponse> reservations;
 
     //Convert Member Entity to Member DTO
     public MemberResponse(Member m, boolean includeAll) {
@@ -45,6 +47,11 @@ public class MemberResponse {
             this.edited = m.getEdited();
             this.approved = m.isApproved();
             this.ranking = m.getRanking();
+        }
+        if (m.getReservations() != null) {
+            reservations = m.getReservations().stream()
+                    .map(r -> new ReservationResponse(r))
+                    .toList();
         }
     }
 
