@@ -1,9 +1,9 @@
-package dat3.car;
+package dat3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"dat3.car", "dat3.security"})
 public class CarsApplication {
 
 	public static void main(String[] args) {

@@ -95,10 +95,17 @@ public class DeveloperData implements ApplicationRunner {
         System.out.println("Successfully saved all cars");
 
         List<Member> members = new ArrayList<>();
-        members.add(new Member("user1", "u1@ok.com", "letmein", "Anders", "Andersen","Eksempelvænget 1", "Eksempelby","1234"));
-        members.add(new Member("user2", "u2@ok.com", "letmein", "Bent", "Bentsen","Eksempelvænget 2", "Eksempelby","1234"));
+        members.add(new Member("member1", "m1@a.com", "letmein1", "Anders", "Andersen","Eksempelvænget 1", "Eksempelby","1234"));
+        members.add(new Member("member2", "m2@a.com", "letmein2", "Bent", "Bentsen","Eksempelvænget 2", "Eksempelby","1234"));
         memberRepository.saveAll(members);
         System.out.println("Successfully saved all members");
+
+        List<Reservation> reservations = new ArrayList<>();
+        reservations.add(new Reservation(LocalDate.of(2021, 11, 21), cars.get(0), members.get(0)));
+        reservations.add(new Reservation(LocalDate.of(2021, 11, 22), cars.get(1), members.get(0)));
+        reservationRepository.saveAll(reservations);
+        System.out.println("Successfully saved all reservations");
+
 
         setupUserWithRoles();
     }
@@ -106,11 +113,18 @@ public class DeveloperData implements ApplicationRunner {
     @Autowired
     UserWithRolesRepository userWithRolesRepository;
 
+    final String passwordUsedByAll = "test12";
     private void setupUserWithRoles() {
-        UserWithRoles user1 = new UserWithRoles("user1", "test1234", "user1@mail.com");
-        UserWithRoles user2 = new UserWithRoles("user2", "test1234", "user2@mail.com");
-        UserWithRoles user3 = new UserWithRoles("user3", "test1234", "user3@mail.com");
-        UserWithRoles user4 = new UserWithRoles("user4", "test1234", "user4@mail.com");
+        System.out.println("******************************************************************************");
+        System.out.println("******* NEVER  COMMIT/PUSH CODE WITH DEFAULT CREDENTIALS FOR REAL ************");
+        System.out.println("******* REMOVE THIS BEFORE DEPLOYMENT, AND SETUP DEFAULT USERS DIRECTLY  *****");
+        System.out.println("**** ** ON YOUR REMOTE DATABASE                 ******************************");
+        System.out.println("******************************************************************************");
+
+        UserWithRoles user1 = new UserWithRoles("user1", "passwordUsedByAll", "user1@a.com");
+        UserWithRoles user2 = new UserWithRoles("user2", "passwordUsedByAll", "user2@a.com");
+        UserWithRoles user3 = new UserWithRoles("user3", "passwordUsedByAll", "user3@a.com");
+        UserWithRoles user4 = new UserWithRoles("user4", "passwordUsedByAll", "user4@a.com");
         user1.addRole(Role.USER);
         user1.addRole(Role.ADMIN);
         user2.addRole(Role.USER);
@@ -121,5 +135,4 @@ public class DeveloperData implements ApplicationRunner {
         userWithRolesRepository.save(user3);
         userWithRolesRepository.save(user4);
     }
-
 }

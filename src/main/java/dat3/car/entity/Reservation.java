@@ -18,19 +18,11 @@ public class Reservation extends AdminDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private LocalDate rentalDate;
-
     @ManyToOne
-    //@JoinColumn(name = "member_id")
     private Member member;
-
     @ManyToOne
-    //@JoinColumn(name = "car_id")
     private Car car;
-
-    //private LocalDate rentalDate;
-
 
     public Reservation(LocalDate rentalDate, Car car, Member member) {
         this.rentalDate = rentalDate;

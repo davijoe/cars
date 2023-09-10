@@ -2,6 +2,7 @@ package dat3.car.entity;
 
 import dat3.security.entity.UserWithRoles;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,10 +19,12 @@ import java.util.List;
 @DiscriminatorColumn(name = "USER_TYPE")
 public class Member extends UserWithRoles {
 
-    @Column(nullable = false, length = 45)
+    @Column(length = 45)
+    @NotNull
     private String firstName;
 
-    @Column(nullable = false, length = 45)
+    @Column(length = 45)
+    @NotNull
     private String lastName;
 
     @Column(length = 65)
@@ -37,8 +40,8 @@ public class Member extends UserWithRoles {
 
     private int ranking;
 
-    @OneToMany(mappedBy = "member")
-    List<Reservation> reservations;
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    List<Reservation> reservations = new ArrayList<>();
 
     public Member(String username, String email, String password,
                   String firstName, String lastName, String street,
@@ -52,9 +55,6 @@ public class Member extends UserWithRoles {
     }
 
     public void addReservation(Reservation reservation) {
-        if (reservations == null) {
-            reservations = new ArrayList<>();
-        }
         reservations.add(reservation);
     }
 }
