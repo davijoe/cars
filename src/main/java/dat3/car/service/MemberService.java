@@ -25,9 +25,7 @@ public class MemberService {
         //Convert List<Member> to Stream<Member>
         return members.stream()
                 //Map each member object from stream to a MemberResponse object
-                .map(MemberResponse::new) //Use the constructor reference from MemberResponse
-                //Collect stream of MemberResponse objects to a List<MemberResponse>
-                .collect(Collectors.toList());
+                .map((member -> new MemberResponse(member,includeAll))).toList();
     }
 
     public MemberResponse findById(String username){
