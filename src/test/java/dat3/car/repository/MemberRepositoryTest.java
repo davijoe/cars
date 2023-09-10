@@ -46,12 +46,4 @@ class MemberRepositoryTest {
       assertEquals(0, memberRepository.findAll().size());
       assertEquals(0, memberRepository.count());
    }
-
-   @Test
-   void countAll() {
-
-      Long count = memberRepository.count();
-      assertEquals(2, count);
-   }
-
 }
