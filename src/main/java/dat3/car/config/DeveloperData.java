@@ -6,6 +6,10 @@ import dat3.car.entity.Reservation;
 import dat3.car.repository.CarRepository;
 import dat3.car.repository.MemberRepository;
 import dat3.car.repository.ReservationRepository;
+import dat3.security.entity.Role;
+import dat3.security.entity.UserWithRoles;
+import dat3.security.repository.UserWithRolesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +25,7 @@ public class DeveloperData implements ApplicationRunner {
     CarRepository carRepository;
     MemberRepository memberRepository;
     ReservationRepository reservationRepository;
+
 
     public DeveloperData(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
         this.carRepository = carRepository;
@@ -95,5 +100,26 @@ public class DeveloperData implements ApplicationRunner {
         memberRepository.saveAll(members);
         System.out.println("Successfully saved all members");
 
+        setupUserWithRoles();
     }
+
+    @Autowired
+    UserWithRolesRepository userWithRolesRepository;
+
+    private void setupUserWithRoles() {
+        UserWithRoles user1 = new UserWithRoles("user1", "test1234", "user1@mail.com");
+        UserWithRoles user2 = new UserWithRoles("user2", "test1234", "user2@mail.com");
+        UserWithRoles user3 = new UserWithRoles("user3", "test1234", "user3@mail.com");
+        UserWithRoles user4 = new UserWithRoles("user4", "test1234", "user4@mail.com");
+        user1.addRole(Role.USER);
+        user1.addRole(Role.ADMIN);
+        user2.addRole(Role.USER);
+        user3.addRole(Role.ADMIN);
+        //No Role assigned to user4
+        userWithRolesRepository.save(user1);
+        userWithRolesRepository.save(user2);
+        userWithRolesRepository.save(user3);
+        userWithRolesRepository.save(user4);
+    }
+
 }

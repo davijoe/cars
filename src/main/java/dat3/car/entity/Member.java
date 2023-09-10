@@ -1,9 +1,7 @@
 package dat3.car.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import dat3.security.entity.UserWithRoles;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,17 +14,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Member extends AdminDetails {
-
-    @Id
-    @Column(nullable = false, length = 45, unique = true)
-    private String username;
-
-    @Column(nullable = false, length = 45, unique = true)
-    private String email;
-
-    @Column(nullable = false, length = 45)
-    private String password;
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_TYPE")
+public class Member extends UserWithRoles {
 
     @Column(nullable = false, length = 45)
     private String firstName;
@@ -53,9 +43,7 @@ public class Member extends AdminDetails {
     public Member(String username, String email, String password,
                   String firstName, String lastName, String street,
                   String city, String zip){
-        this.username = username;
-        this.email = email;
-        this.password = password;
+        super(username, email, password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.street = street;
