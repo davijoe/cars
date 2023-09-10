@@ -41,6 +41,9 @@ public class ReservationService {
         if(body.getDate().isBefore(LocalDate.now())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation date cannot be in the past");
         }
+        if (reservationRepository.existsByRentalDateAndCarId(body.getDate(), body.getCarId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car is already reserved for this date");
+        }
         Member member = memberRepository.findById(body.getUsername())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Member not found"));
         Car car = carRepository.findById(body.getCarId())
