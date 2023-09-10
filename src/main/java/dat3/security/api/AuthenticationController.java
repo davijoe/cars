@@ -34,7 +34,7 @@ public class AuthenticationController {
   @Value("${app.token-expiration}")
   private long tokenExpiration;
 
-  private AuthenticationManager authenticationManager;
+  private final AuthenticationManager authenticationManager;
 
   JwtEncoder encoder;
   public AuthenticationController(AuthenticationManager authenticationManager, JwtEncoder encoder) {
