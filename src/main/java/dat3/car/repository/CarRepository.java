@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Integer> {
 
-    boolean existsByBrandAndModel(String brand, String model);
+   boolean existsByBrandAndModel(String brand, String model);
 
    List<Car> findAllByBrand(String brand);
 }
