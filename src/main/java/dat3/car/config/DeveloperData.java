@@ -2,13 +2,16 @@ package dat3.car.config;
 
 import dat3.car.entity.Car;
 import dat3.car.entity.Member;
+import dat3.car.entity.Reservation;
 import dat3.car.repository.CarRepository;
 import dat3.car.repository.MemberRepository;
+import dat3.car.repository.ReservationRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +19,13 @@ import java.util.List;
 public class DeveloperData implements ApplicationRunner {
 
     final CarRepository carRepository;
-
     final MemberRepository memberRepository;
+    final ReservationRepository reservationRepository;
 
-    public DeveloperData(CarRepository carRepository, MemberRepository memberRepository) {
+    public DeveloperData(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
         this.carRepository = carRepository;
         this.memberRepository = memberRepository;
+        this.reservationRepository = reservationRepository;
     }
 
 
@@ -82,7 +86,7 @@ public class DeveloperData implements ApplicationRunner {
         cars.add(new Car("Volkswagen","Arteon",959.83));
         cars.add(new Car("Volkswagen","Golf",659.39));
         cars.add(new Car("Volvo","240",798.92));
-        */
+
 
         //Devdata MED max discount
         cars.add(new Car("Acura","Integra",1504.41,168));
@@ -135,16 +139,30 @@ public class DeveloperData implements ApplicationRunner {
         cars.add(new Car("Volkswagen","Arteon",959.83,265));
         cars.add(new Car("Volkswagen","Golf",659.39,321));
         cars.add(new Car("Volvo","240",798.92,257));
+        */
 
+        Car car1 = new Car("Acura","Integra",1504.41,168);
+        Car car2 = new Car("Alfa Romeo","164",1577.65,140);
+        Car car3 = new Car("Audi","100",831.09,380);
         carRepository.saveAll(cars);
-
         System.out.println("Successfully saved all cars");
 
         List<Member> members = new ArrayList<>();
-        members.add(new Member("user1", "example1@example.com", "letmein", "Anders", "Andersen","Eksempelvænget 1", "Eksempelby","1234"));
+        //members.add(new Member("user1", "example1@example.com", "letmein", "Anders", "Andersen","Eksempelvænget 1", "Eksempelby","1234"));
+        Member m1 = new Member("user1", "u1@ok.com", "letmein", "Anders", "Andersen","Eksempelvænget 1", "Eksempelby","1234");
+        Member m2 = new Member("user2", "u2@ok.com", "letmein", "Bent", "Bentsen","Eksempelvænget 2", "Eksempelby","1234");
 
         memberRepository.saveAll(members);
-
         System.out.println("Successfully saved all members");
+
+        List<Reservation> reservations = new ArrayList<>();
+        LocalDate date1 = LocalDate.now();
+        LocalDate date2 = LocalDate.now().plusDays(1);
+        LocalDate date3 = LocalDate.now().plusDays(2);
+
+        Reservation r1 = new Reservation(date1, car1, m1);
+        Reservation r2 = new Reservation(date2, car2, m2);
+        reservationRepository.saveAll(reservations);
+
     }
 }

@@ -36,17 +36,6 @@ public class CarController {
         return carService.addCar(body);
     }
 
-//    @PostMapping()
-//    public ResponseEntity<String> addCar(@RequestBody CarRequest body) {
-//        try {
-//            carService.addCar(body);
-//            return ResponseEntity.ok("Car added successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding car");
-//        }
-//    }
-
-
     //Security --> ADMIN
     @PutMapping("/{id}")
     ResponseEntity<Boolean> editCar(@RequestBody CarRequest body, @PathVariable int id){

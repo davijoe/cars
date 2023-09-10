@@ -1,13 +1,16 @@
 package dat3.car.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -44,6 +47,9 @@ public class Member extends AdminDetails {
 
     private int ranking;
 
+    @OneToMany(mappedBy = "member")
+    List<Reservation> reservations;
+
     public Member(String username, String email, String password,
                   String firstName, String lastName, String street,
                   String city, String zip){
@@ -55,5 +61,12 @@ public class Member extends AdminDetails {
         this.street = street;
         this.city = city;
         this.zip = zip;
+    }
+
+    public void addReservation(Reservation reservation) {
+        if (reservations == null) {
+            reservations = new ArrayList<>();
+        }
+        reservations.add(reservation);
     }
 }
