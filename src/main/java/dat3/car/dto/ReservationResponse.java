@@ -17,7 +17,7 @@ public class ReservationResponse {
 
     LocalDate reservationDate;
 
-    public void ReservationResponse(Reservation reservation){
+    public ReservationResponse(Reservation reservation){
         this.id = reservation.getId();
         this.carId = reservation.getCar().getId();
         this.brand = reservation.getCar().getBrand();

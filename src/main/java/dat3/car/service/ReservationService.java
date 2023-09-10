@@ -20,13 +20,11 @@ public class ReservationService {
     CarRepository carRepository;
     MemberRepository memberRepository;
     ReservationRepository reservationRepository;
-    MemberService memberService;
 
     public ReservationService(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
         this.carRepository = carRepository;
         this.memberRepository = memberRepository;
         this.reservationRepository = reservationRepository;
-        //this.memberService = memberService;
     }
     public ReservationResponse addReservation(ReservationRequest body) {
         if(body.getDate().isBefore(LocalDate.now())) {
@@ -36,7 +34,7 @@ public class ReservationService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Member not found"));
         Car car = carRepository.findById(body.getCarId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Car not found"));
-        Reservation res = reservationRepository.save(new Reservation(body.getDate(),car,member));
-        return new ReservationResponse(res);
+        Reservation reservation = reservationRepository.save(new Reservation(body.getDate(),car,member));
+        return new ReservationResponse(reservation);
     }
 }

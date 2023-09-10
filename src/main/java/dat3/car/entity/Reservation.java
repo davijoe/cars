@@ -20,11 +20,11 @@ public class Reservation extends AdminDetails{
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    //@JoinColumn(name = "member_id")
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "car_id")
+    //@JoinColumn(name = "car_id")
     private Car car;
 
     private LocalDate rentalDate;
