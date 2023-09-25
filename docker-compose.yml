@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  app:
+    image: my-cars-image
+    ports:
+      - "8080:8080"
+    environment:
+      - JDBC_DATABASE_URL=${JDBC_DATABASE_URL}
+      - JDBC_USERNAME=${JDBC_USERNAME}
+      - JDBC_PASSWORD=${JDBC_PASSWORD}
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: cars
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
